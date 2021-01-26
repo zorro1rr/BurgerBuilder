@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
-import classes from './Burger.module.css';
+import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
+import classes from "./Burger.module.css";
 
 const burger = (props) => {
   // looping over an state object
@@ -27,9 +27,9 @@ const burger = (props) => {
 
   return (
     <div className={classes.Burger}>
-      <BurgerIngredient type='bread-top' />
+      <BurgerIngredient type="bread-top" />
       {transformedIngredients}
-      <BurgerIngredient type='bread-bottom' />
+      <BurgerIngredient type="bread-bottom" />
     </div>
   );
 };

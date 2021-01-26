@@ -116,28 +116,24 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    // alert('you continue');
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      // in a real app you would verify price on backend to ensure it is not manipulated by the user
-      price: this.state.totalPrice,
-      customer: {
-        name: "Justin Howard",
-        address: {
-          street: "1234 Test Street",
-          zip: 90210,
-          country: "United States",
-        },
-        email: "test@test.com",
-      },
-      deliveryMethod: "fastest",
-    };
-    // orders.json is specific to firebase
-    axios
-      .post("/orders.json", order)
-      .then((response) => this.setState({ loading: false, purchasing: false }))
-      .catch((error) => this.setState({ loading: false, purchasing: false }));
+    // components that are feed through react-router have access to a props.history
+    // here we are making query parametors that we are going to grab in our checkout page because we have access
+    // to this.props.location because it was passed through with router
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(
+        //encondeURIComponent is a built in JS method that deals with things like whitespace for URL
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[i])
+      );
+    }
+    queryParams.push("price=" + this.state.totalPrice);
+    const queryString = queryParams.join("&");
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + queryString,
+    });
   };
 
   render() {
